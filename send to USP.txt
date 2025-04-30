@@ -1,0 +1,24 @@
+Send Data to Arduino via Serial (USB)
+You can use the pyserial library to send the number of free spots (e.g., 6) over USB to an Arduino board.
+
+🔧 Step-by-Step:
+✅ Install pyserial:
+bash
+Copier
+Modifier
+pip install pyserial
+✅ Modify your code:
+Add this at the top:
+
+python :
+import serial
+import time
+
+# Adjust port and baud rate to match your Arduino settings
+arduino = serial.Serial(port='COM3', baudrate=9600, timeout=1)  # Use /dev/ttyUSB0 on Linux
+time.sleep(2)  # Let it initialize
+Then, inside your loop, after calculating sum(spots_status) (free spots), add:
+
+python :
+free_spots = str(sum(spots_status))
+arduino.write((free_spots + '\n').encode())
